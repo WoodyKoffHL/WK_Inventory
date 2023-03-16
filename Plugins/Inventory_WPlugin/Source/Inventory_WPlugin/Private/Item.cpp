@@ -1,13 +1,19 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// Woodykoff Inventory for Unreal Engine
+// Special for github
 
 #include "Item.h"
 
 // Sets default values
 AItem::AItem()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+ 	// Off for Tick. 
+	//To expand the functionality associated with the work of each frame - True
+	PrimaryActorTick.bCanEverTick = false;
+	if (!ItemStruct.ItemIcon) {
+		//Set default icon for item
+		static ConstructorHelpers::FObjectFinder<UTexture2D> DefaultIcon(TEXT("Texture2D'/Inventory_WPlugin/UI/DefaultIcon.DefaultIcon'"));
+		ItemStruct.ItemIcon = DefaultIcon.Object;
+	}
 
 }
 

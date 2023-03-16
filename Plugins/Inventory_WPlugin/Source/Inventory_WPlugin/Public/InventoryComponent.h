@@ -1,4 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Woodykoff Inventory for Unreal Engine
+// Special for github
 
 #pragma once
 

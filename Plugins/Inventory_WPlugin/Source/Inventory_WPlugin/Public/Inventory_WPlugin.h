@@ -1,4 +1,5 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Woodykoff Inventory for Unreal Engine
+// Special for github
 
 #pragma once
 

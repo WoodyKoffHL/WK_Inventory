@@ -1,16 +1,15 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Woodykoff Inventory for Unreal Engine
+// Special for github
 
 
 #include "InventoryComponent.h"
+#include "Item.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -18,17 +17,31 @@ UInventoryComponent::UInventoryComponent()
 void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
+	GenerateSlots();
 }
 
 
-// Called every frame
 void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+}
+
+void UInventoryComponent::GenerateSlots()
+{
+	TArray<FInvSlot> InboundSlots = InventorySlots;
+	InventorySlots.Empty();
+
+	for (int32 Index = 0; Index <= AmountOfSlots; ++Index) {
+		if (InboundSlots.IsValidIndex(Index)) {
+			InventorySlots.Add(InboundSlots[Index]);
+		}
+		else {
+			FInvSlot InboundSlot;
+			InboundSlot.Amount = 0;
+			InboundSlot.Item = nullptr;
+			InventorySlots.Add(InboundSlot);
+		}
+	}
 }
 

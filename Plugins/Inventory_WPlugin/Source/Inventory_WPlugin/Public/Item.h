@@ -19,15 +19,22 @@ struct FItemStruct {
 		FString Name;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Info")
 		FText Description;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Info")
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Info", DisplayName = "Item Type")
 		EItemType ItemType = EItemType::Other;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Info")
 		bool Skeletal = false;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Info")
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Info", DisplayName = "Item Image")
 		UTexture2D* ItemIcon;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Visual", meta = (EditCondition = "Skeletal", EditConditionHides))
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Info")
+		bool Stackeble = false;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Info", DisplayName = "Max Stack Size", meta = (EditCondition = "Stackeble", EditConditionHides))
+		int32 MaxStackSize = 32;
+
+
+	// Components
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Components", DisplayName ="Mesh (Skeletal)" , meta = (EditCondition = "Skeletal", EditConditionHides))
 		USkeletalMeshComponent* SkeletalMesh;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Visual", meta = (EditCondition = "!Skeletal", EditConditionHides))
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Components", DisplayName ="Mesh (Static)", meta = (EditCondition = "!Skeletal", EditConditionHides))
 		UStaticMeshComponent* Mesh;
 };
 
@@ -44,12 +51,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Structure")
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Structure", DisplayName = "Item Structure")
 		FItemStruct ItemStruct;
 
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintCallable)
+		FItemStruct GetIItemStruct() { return ItemStruct; }
 
 };

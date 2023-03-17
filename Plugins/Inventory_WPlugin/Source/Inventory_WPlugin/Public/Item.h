@@ -33,9 +33,9 @@ struct FItemStruct {
 
 	// Components
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Components", DisplayName ="Mesh (Skeletal)" , meta = (EditCondition = "Skeletal", EditConditionHides))
-		USkeletalMeshComponent* SkeletalMesh;
+		USkeletalMesh* SkeletalMesh;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Components", DisplayName ="Mesh (Static)", meta = (EditCondition = "!Skeletal", EditConditionHides))
-		UStaticMeshComponent* Mesh;
+		UStaticMesh* Mesh;
 };
 
 UCLASS()
@@ -51,15 +51,14 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Structure", DisplayName = "Item Structure")
-		FItemStruct ItemStruct;
+	
 
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	UFUNCTION(BlueprintCallable)
-		FItemStruct GetIItemStruct() { return ItemStruct; }
+	
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Structure", DisplayName = "Item Structure")
+		FItemStruct ItemStruct;
 
 };

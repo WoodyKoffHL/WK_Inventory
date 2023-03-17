@@ -61,10 +61,16 @@ public:
 		FRowColumn SlotsRowAndColumn;
 
 	UFUNCTION(BlueprintCallable)
-		void UpdateInventory() { GenerateSlots(); };
+		void GenerateSlots();
 
-	// Generate all slots 
-	void GenerateSlots();
+	UFUNCTION(BlueprintCallable)
+		int32 SearhEmptySlot();
+
+	UFUNCTION(BlueprintCallable)
+		int32 SearhStackSlot();
+
+	UFUNCTION(BlueprintCallable)
+		void AddItem(int32 Index);
 
 private:
 

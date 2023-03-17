@@ -32,7 +32,7 @@ void UInventoryComponent::GenerateSlots()
 	TArray<FInvSlot> InboundSlots = InventorySlots;
 	InventorySlots.Empty();
 
-	for (int32 Index = 0; Index <= AmountOfSlots; ++Index) {
+	for (int32 Index = 0; Index < AmountOfSlots; ++Index) {
 		if (InboundSlots.IsValidIndex(Index)) {
 			InventorySlots.Add(InboundSlots[Index]);
 		}
@@ -43,5 +43,24 @@ void UInventoryComponent::GenerateSlots()
 			InventorySlots.Add(InboundSlot);
 		}
 	}
+}
+
+int32 UInventoryComponent::SearhEmptySlot()
+{
+	
+	for (int32 Index = 0; Index <= AmountOfSlots; ++Index) {
+		if (!InventorySlots.IsValidIndex(Index)) return -1;
+		if (!InventorySlots[Index].Item) return Index;		
+	}
+	return -1;
+}
+
+int32 UInventoryComponent::SearhStackSlot()
+{
+	return int32();
+}
+
+void UInventoryComponent::AddItem(int32 Index)
+{
 }
 

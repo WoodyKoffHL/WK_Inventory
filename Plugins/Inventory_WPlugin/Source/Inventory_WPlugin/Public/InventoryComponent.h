@@ -8,6 +8,7 @@
 #include "InventoryComponent.generated.h"
 
 class AItem;
+class APickUpActor;
 
 USTRUCT(BlueprintType)
 struct FInvSlot {
@@ -60,17 +61,18 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", DisplayName = "Slots in Row / Column")
 		FRowColumn SlotsRowAndColumn;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
 		void GenerateSlots();
 
-	UFUNCTION(BlueprintCallable)
-		int32 SearhEmptySlot();
 
-	UFUNCTION(BlueprintCallable)
-		int32 SearhStackSlot();
+	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
+		bool AddItemForIndex(TSubclassOf<AItem> Item, int32 Amount, int32 Index);
 
-	UFUNCTION(BlueprintCallable)
-		void AddItem(int32 Index);
+	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
+		bool AddItem(APickUpActor* ItemActor);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
+		bool AddToStack(TSubclassOf<AItem> Item, int32 AmountToStack);
 
 private:
 

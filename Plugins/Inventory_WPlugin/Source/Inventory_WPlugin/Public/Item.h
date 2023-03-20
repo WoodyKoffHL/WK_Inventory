@@ -28,7 +28,7 @@ struct FItemStruct {
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Info")
 		bool Stackeble = false;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item Info", DisplayName = "Max Stack Size", meta = (EditCondition = "Stackeble", EditConditionHides))
-		int32 MaxStackSize = 32;
+		int32 MaxStackSize = 1;
 
 
 	// Components

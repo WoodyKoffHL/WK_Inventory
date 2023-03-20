@@ -31,7 +31,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Components")
 		USceneComponent* SceneComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components", meta = (EditCondition = "!ItemStruct.Skeletal", EditConditionHides))

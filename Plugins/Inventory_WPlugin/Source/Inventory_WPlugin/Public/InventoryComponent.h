@@ -74,6 +74,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
 		bool AddToStack(TSubclassOf<AItem> Item, int32 AmountToStack);
 
+	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
+		void UseItemAtIndex(int32 Index);
+
 private:
 
 

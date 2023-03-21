@@ -134,6 +134,33 @@ bool UInventoryComponent::AddToStack(TSubclassOf<AItem> Item, int32 AmountToStac
 	return StackFounded;
 }
 
+void UInventoryComponent::UseItemAtIndex(int32 Index)
+{
+	if (!InventorySlots.IsValidIndex(Index)) return;
+	if (!InventorySlots[Index].Item) return;
+	if (InventorySlots[Index].Item.GetDefaultObject()->ItemStruct.ItemType != EItemType::Useble) return;
+	TSubclassOf<AItem> Item = InventorySlots[Index].Item;
+		if (Item.GetDefaultObject()->ItemStruct.Stackeble) {
+			if (InventorySlots[Index].Amount > 1) {
+				InventorySlots[Index].Amount = InventorySlots[Index].Amount - 1;
+			}
+			else {
+				InventorySlots[Index].Amount = 0;
+				InventorySlots[Index].Item = nullptr;
+			}
+
+		}
+		else {
+			InventorySlots[Index].Amount = 0;
+			InventorySlots[Index].Item = nullptr;
+		}
+
+	AActor* SpawnItem = GetWorld()->SpawnActor(Item);
+	AItem* ActorItem = Cast<AItem>(SpawnItem);
+	ActorItem->UseItem(GetOwner());
+	SpawnItem->Destroy();
+}
+
 
 
 

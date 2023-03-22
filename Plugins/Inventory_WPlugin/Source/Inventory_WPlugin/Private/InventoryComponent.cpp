@@ -202,6 +202,22 @@ void UInventoryComponent::SwapSlots(int32 IndexIn, int32 IndexOut)
 	}
 }
 
+FSlotInfo UInventoryComponent::GetSlotInfo(int32 Index)
+{
+	FSlotInfo SlotInfo;
+	SlotInfo.Empty = true;
+
+	if (InventorySlots.IsValidIndex(Index)) {
+		if (!InventorySlots[Index].Item) return SlotInfo;
+		FInvSlot Slot = InventorySlots[Index];
+		SlotInfo.Empty = false;
+		SlotInfo.Item = Slot.Item;
+		SlotInfo.Amount = Slot.Amount;		
+	}
+
+	return SlotInfo;
+}
+
 
 
 

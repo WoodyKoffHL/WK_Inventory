@@ -23,6 +23,21 @@ struct FInvSlot {
 };
 
 USTRUCT(BlueprintType)
+struct FSlotInfo {
+	// Slot inventory
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Slot info")
+		bool Empty = true;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Slot info")
+		TSubclassOf<AItem> Item;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Slot")
+		int32 Amount;
+
+
+};
+
+USTRUCT(BlueprintType)
 struct FRowColumn {
 	// Slot inventory
 	GENERATED_USTRUCT_BODY()
@@ -82,6 +97,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
 		void SwapSlots(int32 IndexIn, int32 IndexOut);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Inventory Plugin")
+		FSlotInfo GetSlotInfo(int32 Index);
 
 private:
 

@@ -50,6 +50,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void UseItem(AActor* Caller);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void ThrowOut(AActor* Caller, int32 Amount, FVector Location);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

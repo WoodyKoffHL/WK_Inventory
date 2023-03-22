@@ -61,8 +61,8 @@ bool UInventoryComponent::AddItemForIndex(TSubclassOf<AItem> Item, int32 Amount,
 // Add item for all cases. Works only with PickUpActor
 bool UInventoryComponent::AddItem(APickUpActor* ItemActor)
 {
-	bool debugBool = false;
 	if (!ItemActor) return false;
+	if (!ItemActor->Item) return false;
 	int32 FoundIndex = -1;
 	APickUpActor* LocalActor = ItemActor;
 	bool Stackeble = LocalActor->Item.GetDefaultObject()->ItemStruct.Stackeble;
@@ -159,6 +159,47 @@ void UInventoryComponent::UseItemAtIndex(int32 Index)
 	AItem* ActorItem = Cast<AItem>(SpawnItem);
 	ActorItem->UseItem(GetOwner());
 	SpawnItem->Destroy();
+}
+
+void UInventoryComponent::ThrowOutFromIndex(int32 Index, int32 ThrowAmount)
+{
+	if (!InventorySlots.IsValidIndex(Index)) return;
+	if (!InventorySlots[Index].Item) return;
+	int32 LocalAmount = ThrowAmount;
+	TSubclassOf<AItem> Item = InventorySlots[Index].Item;
+	if (Item.GetDefaultObject()->ItemStruct.Stackeble) {
+		if (InventorySlots[Index].Amount > LocalAmount) {
+			InventorySlots[Index].Amount = InventorySlots[Index].Amount - LocalAmount;
+		}
+		else {
+			LocalAmount = InventorySlots[Index].Amount;
+			InventorySlots[Index].Amount = 0;
+			InventorySlots[Index].Item = nullptr;
+		}
+
+	}
+	else {
+		LocalAmount = 1;
+		InventorySlots[Index].Amount = 0;
+		InventorySlots[Index].Item = nullptr;
+	}
+
+	AActor* SpawnItem = GetWorld()->SpawnActor(Item);
+	AItem* ActorItem = Cast<AItem>(SpawnItem);
+	FVector LocationActor = GetOwner()->GetActorLocation();
+	ActorItem->ThrowOut(GetOwner(), LocalAmount, LocationActor);
+	SpawnItem->Destroy();
+
+}
+
+void UInventoryComponent::SwapSlots(int32 IndexIn, int32 IndexOut)
+{
+	if (InventorySlots.IsValidIndex(IndexIn) || InventorySlots.IsValidIndex(IndexOut)) {
+		FInvSlot SlotOut = InventorySlots[IndexOut];
+		FInvSlot SlotIn = InventorySlots[IndexIn];
+		InventorySlots[IndexOut] = SlotIn;
+		InventorySlots[IndexIn] = SlotOut;
+	}
 }
 
 

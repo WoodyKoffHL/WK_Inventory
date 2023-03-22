@@ -77,6 +77,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
 		void UseItemAtIndex(int32 Index);
 
+	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
+		void ThrowOutFromIndex(int32 Index, int32 Amount);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
+		void SwapSlots(int32 IndexIn, int32 IndexOut);
+
 private:
 
 

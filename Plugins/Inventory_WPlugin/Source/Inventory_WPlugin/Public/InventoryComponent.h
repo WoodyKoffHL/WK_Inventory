@@ -70,6 +70,9 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", DisplayName = "Inventory slots")
 		TArray<FInvSlot> InventorySlots;
 
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", DisplayName = "Owner Actor Name")
+		FText OwnerName;
+
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", DisplayName = "Amount of slots")
 		int32 AmountOfSlots = 16;
 

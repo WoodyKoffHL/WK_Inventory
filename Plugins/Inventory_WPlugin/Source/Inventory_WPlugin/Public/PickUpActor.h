@@ -19,7 +19,7 @@ class INVENTORY_WPLUGIN_API APickUpActor : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
+
 	APickUpActor();
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Item")

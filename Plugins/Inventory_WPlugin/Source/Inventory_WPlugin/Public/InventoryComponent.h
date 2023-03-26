@@ -5,6 +5,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "InventoryWidget.h"
 #include "InventoryComponent.generated.h"
 
 class AItem;
@@ -37,17 +38,6 @@ struct FSlotInfo {
 
 };
 
-USTRUCT(BlueprintType)
-struct FRowColumn {
-	// Slot inventory
-	GENERATED_USTRUCT_BODY()
-	
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", DisplayName = "Slots in Row")
-		int32 SlotsPerRow = 4;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", DisplayName = "Slots in Column")
-		int32 SlotsInColumn = 4;
-};
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class INVENTORY_WPLUGIN_API UInventoryComponent : public UActorComponent
@@ -76,8 +66,6 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", DisplayName = "Amount of slots")
 		int32 AmountOfSlots = 16;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", DisplayName = "Slots in Row / Column")
-		FRowColumn SlotsRowAndColumn;
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory Plugin")
 		void GenerateSlots();
@@ -103,6 +91,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Inventory Plugin")
 		FSlotInfo GetSlotInfo(int32 Index);
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "User Interface")
+		UInventoryWidget* InventoryWidget;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "User Interface", DisplayName = "Slots in Row")
+		int32 SlotsinRow = 4;
 
 private:
 

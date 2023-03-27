@@ -29,11 +29,13 @@ struct FSlotInfo {
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Slot info")
-		bool Empty = true;
+		bool Success;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Slot info")
 		TSubclassOf<AItem> Item;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Slot")
 		int32 Amount;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Slot")
+		int32 SlotIndex;
 
 
 };
@@ -92,11 +94,16 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Inventory Plugin")
 		FSlotInfo GetSlotInfo(int32 Index);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Inventory Plugin")
+		FSlotInfo SearhItem(TSubclassOf<AItem> Item, int32 Amount);
+
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "User Interface")
 		UInventoryWidget* InventoryWidget;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "User Interface", DisplayName = "Slots in Row")
 		int32 SlotsinRow = 4;
+
+
 
 private:
 

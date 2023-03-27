@@ -16,6 +16,7 @@ class INVENTORY_WPLUGIN_API UInventoryWidget : public UUserWidget
 
 public:
 
+
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory Widget")
 		UUserWidget* Main_Hud;
 
@@ -32,6 +33,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory Widget")
 		void GenerateSlotWidgets();
+
+	UFUNCTION(BlueprintNativeEvent, DisplayName = "Event Update Inventory", Category = "Inventory Widget")
+		void UpdateAllSlots();
 
 private:
 

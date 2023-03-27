@@ -44,6 +44,8 @@ void UInventoryComponent::GenerateSlots()
 			InventorySlots.Add(InboundSlot);
 		}
 	}
+
+	//if (InventoryWidget) InventoryWidget->UpdateAllSlots();
 }
 
 
@@ -55,6 +57,7 @@ bool UInventoryComponent::AddItemForIndex(TSubclassOf<AItem> Item, int32 Amount,
 		InboundSlot.Item = Item;
 		InboundSlot.Amount = Amount;
 		InventorySlots[Index] = InboundSlot;
+		//if (InventoryWidget) InventoryWidget->UpdateAllSlots_Implementation();
 		return true;
 }
 
@@ -95,8 +98,10 @@ bool UInventoryComponent::AddItem(APickUpActor* ItemActor)
 	if (!InventorySlots[FoundIndex].Item) {
 		AddItemForIndex(LocalActor->Item, LocalActor->Amount, FoundIndex);
 		ItemActor->Destroy();
+		if (InventoryWidget) InventoryWidget->UpdateAllSlots_Implementation();
 		return true;
-	}  
+	} 
+	//if(InventoryWidget) InventoryWidget->UpdateAllSlots_Implementation();
 	return false;
 }
 
@@ -130,7 +135,8 @@ bool UInventoryComponent::AddToStack(TSubclassOf<AItem> Item, int32 AmountToStac
 			else StackFounded = false;
 		}
 	}
-
+	
+	if (InventoryWidget) InventoryWidget->UpdateAllSlots_Implementation();
 	return StackFounded;
 }
 
@@ -159,6 +165,7 @@ void UInventoryComponent::UseItemAtIndex(int32 Index)
 	AItem* ActorItem = Cast<AItem>(SpawnItem);
 	ActorItem->UseItem(GetOwner());
 	SpawnItem->Destroy();
+	if (InventoryWidget) InventoryWidget->UpdateAllSlots_Implementation();
 }
 
 void UInventoryComponent::ThrowOutFromIndex(int32 Index, int32 ThrowAmount)
@@ -189,6 +196,7 @@ void UInventoryComponent::ThrowOutFromIndex(int32 Index, int32 ThrowAmount)
 	FVector LocationActor = GetOwner()->GetActorLocation();
 	ActorItem->ThrowOut(GetOwner(), LocalAmount, LocationActor);
 	SpawnItem->Destroy();
+	if (InventoryWidget) InventoryWidget->UpdateAllSlots_Implementation();
 
 }
 
@@ -199,22 +207,42 @@ void UInventoryComponent::SwapSlots(int32 IndexIn, int32 IndexOut)
 		FInvSlot SlotIn = InventorySlots[IndexIn];
 		InventorySlots[IndexOut] = SlotIn;
 		InventorySlots[IndexIn] = SlotOut;
+		if (InventoryWidget) InventoryWidget->UpdateAllSlots_Implementation();
 	}
 }
 
 FSlotInfo UInventoryComponent::GetSlotInfo(int32 Index)
 {
 	FSlotInfo SlotInfo;
-	SlotInfo.Empty = true;
+	SlotInfo.Success = false;
 
 	if (InventorySlots.IsValidIndex(Index)) {
 		if (!InventorySlots[Index].Item) return SlotInfo;
 		FInvSlot Slot = InventorySlots[Index];
-		SlotInfo.Empty = false;
+		SlotInfo.Success = true;
 		SlotInfo.Item = Slot.Item;
-		SlotInfo.Amount = Slot.Amount;		
+		SlotInfo.Amount = Slot.Amount;
+		SlotInfo.SlotIndex = Index;
 	}
 
+	return SlotInfo;
+}
+
+FSlotInfo UInventoryComponent::SearhItem(TSubclassOf<AItem> Item, int32 Amount)
+{
+	FSlotInfo SlotInfo;
+	SlotInfo.Success = false;
+	for (int32 Index = 0; Index <= AmountOfSlots; ++Index) {
+		FInvSlot Slot = InventorySlots[Index];
+		if (Item == Slot.Item || Amount <= Slot.Amount) {
+			SlotInfo.Success = true;
+			SlotInfo.Item = Slot.Item;
+			SlotInfo.Amount = Slot.Amount;
+			SlotInfo.SlotIndex = Index;
+			break;
+		}
+	}
+	
 	return SlotInfo;
 }
 

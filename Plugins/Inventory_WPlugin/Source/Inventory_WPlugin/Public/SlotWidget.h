@@ -47,4 +47,11 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true), Category = "Slot info", DisplayName = "Inventory Component")
 		UInventoryComponent* InventoryComponent;
 
+	// Functions and procedures
+	
+	UFUNCTION(BlueprintNativeEvent, Category = "Inventory Component", DisplayName = "Event Update Slot Widget")
+		void EventUpdate();
+
+
+
 };

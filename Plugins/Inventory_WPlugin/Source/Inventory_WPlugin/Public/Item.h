@@ -8,7 +8,7 @@
 #include "Item.generated.h"
 
 UENUM(BlueprintType)
-enum class EItemType : uint8 {Item, Equip, Useble, Eatible, Currency, Resource, Other};
+enum class EItemType : uint8 {Item, Equip, Useble, Eatible, Resource, Other};
 
 // Struct of Characteristics
 USTRUCT(BlueprintType)

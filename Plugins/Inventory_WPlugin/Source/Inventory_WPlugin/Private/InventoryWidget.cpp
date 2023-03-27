@@ -5,6 +5,8 @@
 #include "SlotWidget.h"
 #include "InventoryComponent.h"
 
+
+
 void UInventoryWidget::GenerateSlotWidgets()
 {
 	if (!InventoryComponent) return;
@@ -21,7 +23,14 @@ void UInventoryWidget::GenerateSlotWidgets()
 		NewSlot->RowAndColumn.SlotRow = GetRow(Index);
 		NewSlot->RowAndColumn.SlotColumn = GetColumn(Index);
 		SlotWidgets.Add(NewSlot);
+		NewSlot->EventUpdate_Implementation();
 	}
+}
+
+void UInventoryWidget::UpdateAllSlots_Implementation()
+{
+	GenerateSlotWidgets();
+	UpdateAllSlots();
 }
 
 int32 UInventoryWidget::GetRow(int32 Index)
